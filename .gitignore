@@ -21,3 +21,5 @@ yarn-debug.log*
 yarn-error.log*
 .idea/
 /twitter-api.json
+config/
+scripts/
