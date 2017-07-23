@@ -18,6 +18,7 @@ class SearchBar extends Component {
         }
         this.handleChange = this.handleChange.bind(this);
         this.getValidationState = this.getValidationState.bind(this);
+        this.search = this.search.bind(this);
     }
 
     handleChange(e) {
@@ -33,6 +34,11 @@ class SearchBar extends Component {
         else {
             return 'success';
         }
+    }
+
+    // This second layer avoids calling the search function while component is rendering
+    search(){
+        this.props.search(this.state.searchText);
     }
 
     render() {
@@ -53,11 +59,17 @@ class SearchBar extends Component {
                             onChange={this.handleChange}
                         />
                         { this.getValidationState() === 'success' ?
+                            // If search text is valid, display search button
                             <InputGroupButton>
-                                <Button bsSize="large" active={this.getValidationState() === 'success'}>
+                                <Button
+                                    bsSize="large"
+                                    active={this.getValidationState() === 'success'}
+                                    onClick={this.search}
+                                >
                                     <Glyphicon glyph="search"/>
                                 </Button>
                             </InputGroupButton> :
+                            // If search text is NOT valid, display remove glyph
                             <InputGroupAddon>
                                 <Glyphicon glyph="remove"/>
                             </InputGroupAddon>
